@@ -13,15 +13,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-
 @Component
 public class HandleUpdate extends TelegramLongPollingBot {
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final BlockingQueue<Runnable> queue = new LinkedBlockingQueue<>();
+
     @Value("${bot.token}")
     private String token;
     @Value("${bot.username}")
@@ -75,23 +69,20 @@ public class HandleUpdate extends TelegramLongPollingBot {
         return token;
     }
 
-    public synchronized String a(String text) {
-        try {
-            Thread.sleep(1200); // 1.2 sekund kutish (MUHIM)
+    public String a(String text){
 
-            GenerateContentResponse response =
+        try {
+            GenerateContentResponse generateContentResponse =
                     client.models.generateContent(
-                            "gemini-3-flash-preview",
-                            text,
+                            "gemini-3-flash-preview"
+                            , text,
                             null
                     );
-            return response.text();
-
-        } catch (Exception e) {
-            return "⏳ Biroz kuting, hozir javob beraman...";
+            return generateContentResponse.text();
+        }catch (Exception e){
+            return "damizni oling men charchadim";
         }
     }
-
     @Override
     public String getBotUsername() {
         return username;
