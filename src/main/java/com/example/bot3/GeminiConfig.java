@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 public class GeminiConfig {
 
     @Bean
-    public Client client(@Value("${gemini}")String token){
+    public Client client(){
         return Client.builder()
-                .apiKey(token)
+                .apiKey("AIzaSyDC5qP4hRcyjwWWeBqSF9eie7fO9PLsj9U")
                 .build();
     }
 //sdfgsdfgsdfg
